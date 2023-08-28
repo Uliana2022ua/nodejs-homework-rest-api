@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs");
 
 const { User } = require("../../models");
 
-
 const signup = async (req, res) => {
-  const { email, password } = req.body;
+    const { email, password, subscription = "starter" } = req.body;
+    
 
   const user = await User.findOne({ email });
 
@@ -15,7 +15,11 @@ const signup = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const newUser = await User.create({
+    email,
+    password: hashPassword,
+    subscription,
+  });
 
   res.status(201).json({
     status: "Success",

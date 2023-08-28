@@ -4,7 +4,7 @@ const updateSubscription = async (req, res) => {
   const { subscription } = req.body;
   const { _id, email } = req.user;
 
-  await User.findByIdAndUpdate(_id, { subscription }, { new: true });
+  await User.findOneAndUpdate(_id, { subscription }, { new: true });
 
   res.json({
     status: "Success",
